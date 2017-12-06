@@ -30,36 +30,42 @@
 						title: 'CGV tăng 3',
 						start: '22:00',
 						dow: [1, 2, 3, 4, 5],
+						description: '50K sau 22h',
 						url: 'https://rapchieuphim.com/khuyen-mai/xem-phim-tang-3-gia-chi-50k-tai-cgv'
 					},
 					{
 						title: 'Beta - Thứ Ba vui vẻ',
 						start: '08:30',
 						dow: [2],
+						description: '45k (2D) và 65k (3D)',
 						url: 'https://moveek.com/khuyen-mai/beta-cineplex-thu-ba-vui-ve/'
 					},
 					{
 						title: 'Lotte LOVELY TUESDAY',
 						start: '08:30',
 						dow: [2],
+						description: '45-60k (2D) và 75-90k (3D)',
 						url: 'https://lottecinemavn.com/vi-vn/su-kien/lovely-tuesday-(tu-15-09).aspx'
 					},
 					{
 						title: 'Platinum Special Couple\'s Day',
 						start: '10:00',
 						dow: [2],
+						description: 'mua 2 vé tặng 1 bỏng và 2 đồ uống,',
 						url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/special-couple-s-day'
 					},
 					{
 						title: 'Platinum Special Thursday',
 						start: '10:00',
 						dow: [4],
+						description: '45K 2D',
 						url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/n-a'
 					},
 					{
 						title: 'Platinum ladies\' night',
 						start: '10:00',
 						dow: [3],
+						description: 'giảm 50% cho vé thứ 2 và 1 phiếu giảm 50% cho 1 loại combo tại quầy Concessions cho nữ',
 						url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/ladies-night'
 					},
 				],
@@ -70,7 +76,7 @@
 					}
 				},
 				eventRender: function(event, element) {
-					element.find('.fc-title').append("<br/>");
+					element.find('.fc-title').append("<br/>" + event.description);
 				}
 			});
 			// adding a every monday and wednesday events:
@@ -95,12 +101,14 @@
 								title: 'CGV CULTURE DAY',
 								start: '08:30',
 								start: test_date,
+								description: '50K 2D',
 								url: 'https://www.cgv.vn/default/newsoffer/cgv-culture-day/'
 							}, // CGV
 							{
 								title: 'Lotte Big Smile Day',
 								start: '08:30',
 								start: test_date,
+								description: '45K 2D',
 								url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/big-smile-day-45,000-50,000-%C4%91ong-ve-xem-phim-t.aspx'
 							} // lottecinema
 						);
@@ -123,12 +131,14 @@
 								title: 'CGV CULTURE DAY',
 								start: '08:30',
 								start: test_date,
+								description: '50K 2D',
 								url: 'https://www.cgv.vn/default/newsoffer/cgv-culture-day/'
 							}, // CGV
 							{
 								title: 'Lotte Big Smile Day',
 								start: '08:30',
 								start: test_date,
+								description: '45K 2D',
 								url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/big-smile-day-45,000-50,000-%C4%91ong-ve-xem-phim-t.aspx'
 							} // lottecinema
 						);
@@ -151,6 +161,7 @@
 							title: 'BHD B\'DAY',
 							start: '08:30',
 							start: test_date,
+							description: '45K 2D',
 							url: 'http://www.bhdstar.vn/deals/bday-2/'
 						});
 					}
@@ -171,6 +182,7 @@
 							title: 'BHD B\'DAY',
 							start: '08:30',
 							start: test_date,
+							description: '45K 2D',
 							url: 'http://www.bhdstar.vn/deals/bday-2/'
 						});
 					}
@@ -191,6 +203,7 @@
 							title: 'Beta - MAD SALE DAY',
 							start: '08:30',
 							start: test_date,
+							description: '45K 2D & tặng 1 bỏng (Phụ thu 5k đối với phim bom tấn)',
 							url: 'https://betacineplex.vn/tin-moi/bung-no-voi-mad-sale-day/118'
 						});
 
@@ -212,6 +225,7 @@
 							title: 'Beta - MAD SALE DAY',
 							start: '08:30',
 							start: test_date,
+							description: '45K 2D & tặng 1 bỏng (Phụ thu 5k đối với phim bom tấn)',
 							url: 'https://betacineplex.vn/tin-moi/bung-no-voi-mad-sale-day/118'
 						});
 
