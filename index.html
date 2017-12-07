@@ -281,6 +281,14 @@
 		.inline {
 			display: inline-block;
 		}
+		
+		a{
+			text-decoration:none;
+		}
+		
+		#lstcinema a:visited{
+		  color:blue;
+		}
 	</style>
 </head>
 
@@ -301,12 +309,14 @@
 		var infowindow = new google.maps.InfoWindow();
 		var marker, i, cinema;
 		var distance;
-		var list, entry;
+		var list, entry, li;
 		var distanceArr = [];
+		var cinemaArr=[];
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
-				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+				//myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+				myLatLng = new google.maps.LatLng(21.0468179, 105.7951931)
 
 				var mapProp = {
 					center: myLatLng,
@@ -322,7 +332,11 @@
 				infowindow.setContent('You are here');
 				infowindow.open(map, marker);
 
-
+				// Instantiate a directions service.
+				var directionsService = new google.maps.DirectionsService
+				var directionsDisplay = new google.maps.DirectionsRenderer({
+					map: map
+				})
 
 				var locations = [
 					['CGV Vincom Center Bà Triệu', 21.0110831, 105.847322, 15],
@@ -370,17 +384,34 @@
 
 					distance = google.maps.geometry.spherical.computeDistanceBetween(myLatLng, cinema)
 					//distance = distance / 1000 + 'km'
-					distanceArr.push([distance, locations[i][0]])
+					distanceArr.push([distance, locations[i][0],locations[i][1], locations[i][2]])
+
+					cinemaArr.push(cinema);
 				}
 				distanceArr.sort(function(a, b) {
 					return a[0] - b[0]
 				});
+				var li;
+				
 				for (i = 0; i < distanceArr.length; i++) {
 					list = document.getElementById('list');
-					entry = document.createElement('li');
+					li = document.createElement("li");
+					entry = document.createElement('a');
+					entry.setAttribute("href", "#");
+					entry.setAttribute("id", "cinema"+i);
+					entry.setAttribute("lat", distanceArr[i][2]);
+					entry.setAttribute("lng", distanceArr[i][3]);
 					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] / 1000 + ' km'));
-					list.appendChild(entry);
+					li.appendChild(entry);
+					list.appendChild(li);
 				}
+				
+				$('a').click(function(e) 
+				{ 
+				cinema = new google.maps.LatLng($(this).attr('lat'), $(this).attr('lng'));
+				calculateAndDisplayRoute(directionsService, directionsDisplay, myLatLng, cinema);
+				});
+
 			}, function error(msg) {
 				alert('Please enable your GPS.');
 
@@ -392,6 +423,20 @@
 		}
 
 
+	}
+
+	function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
+		directionsService.route({
+			origin: pointA,
+			destination: pointB,
+			travelMode: google.maps.TravelMode.DRIVING
+		}, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				directionsDisplay.setDirections(response);
+			} else {
+				//window.alert('Directions request failed due to ' + status);
+			}
+		});
 	}
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZKcVJJ0FCXeUyYYsVl5_Y22aIOgTAxQ&callback=initMap&libraries=geometry" type="text/javascript"></script>
