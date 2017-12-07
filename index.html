@@ -298,6 +298,11 @@
 	function initMap() {
 
 		var myLatLng;
+		var infowindow = new google.maps.InfoWindow();
+		var marker, i, cinema;
+		var distance;
+		var list, entry;
+		var distanceArr = [];
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -313,6 +318,11 @@
 					position: myLatLng,
 					map: map
 				});
+
+				infowindow.setContent('You are here');
+				infowindow.open(map, marker);
+
+
 
 				var locations = [
 					['CGV Vincom Center Bà Triệu', 21.0110831, 105.847322, 15],
@@ -342,11 +352,6 @@
 					['Rạp Tháng 8', 21.0214854, 105.8503522, 15],
 					['Kim Đồng', 21.0238755, 105.8507703, 15],
 				];
-				var infowindow = new google.maps.InfoWindow();
-				var marker, i, cinema;
-				var distance;
-				var list, entry;
-				var distanceArr = [];
 
 				for (i = 0; i < locations.length; i++) {
 					cinema = new google.maps.LatLng(locations[i][1], locations[i][2]);
