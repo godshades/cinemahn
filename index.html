@@ -309,6 +309,11 @@
 				};
 				var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
+				marker = new google.maps.Marker({
+					position: myLatLng,
+					map: map
+				});
+
 				var locations = [
 					['CGV Vincom Center Bà Triệu', 21.0110831, 105.847322, 15],
 					['CGV Vincom Nguyễn Chí Thanh', 21.0232842, 105.8070238, 15],
@@ -371,7 +376,14 @@
 					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] / 1000 + ' km'));
 					list.appendChild(entry);
 				}
-			})
+			}, function error(msg) {
+				alert('Please enable your GPS.');
+
+			}, {
+				maximumAge: 600000,
+				timeout: 5000,
+				enableHighAccuracy: true
+			});
 		}
 
 
