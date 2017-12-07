@@ -12,7 +12,7 @@
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js'></script>
 	<script>
 		$(document).ready(function() {
-
+			//Calendar
 			var date = new Date();
 			var d = date.getDate();
 			var m = date.getMonth();
@@ -79,7 +79,7 @@
 					element.find('.fc-title').append("<br/>" + event.description);
 				}
 			});
-			// adding a every monday and wednesday events:
+			// adding a custom events:
 			$('#calendar').fullCalendar('addEventSource',
 				function(start, end, timezone, callback) {
 
@@ -238,25 +238,145 @@
 		});
 	</script>
 	<style>
+		html {
+			width: 100%;
+			height: 100%;
+		}
+
 		body {
-			margin: 40px 10px;
+			--margin: 40px 10px;
 			padding: 0;
 			font-family: 'Roboto', sans-serif;
 			font-size: 14px;
+			height: 100%;
 		}
 
 		#calendar {
-			margin: 0 auto;
+			--margin: 0 auto;
+			margin-top: 1%;
 		}
 
 		.fc-title {
 			white-space: normal;
 		}
+
+		#cinema {
+			overflow: hidden;
+			width: 100%;
+			height: 30%;
+		}
+
+		#googleMap {
+			float: left;
+			width: 70%;
+			height: 100%;
+		}
+
+		#lstcinema {
+			width: 30%;
+			height: 100%;
+			overflow: auto;
+		}
+
+		.inline {
+			display: inline-block;
+		}
 	</style>
 </head>
 
 <body>
+	<div id="cinema">
+		<div id="googleMap" class="inline"></div>
+		<div id="lstcinema" class="inline">
+			<ol id="list"></ol>
+		</div>
+	</div>
 	<div id='calendar'></div>
 </body>
+<script>
+	//Google map
+	function initMap() {
+
+		var myLatLng;
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+
+				var mapProp = {
+					center: myLatLng,
+					zoom: 13,
+				};
+				var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+				var locations = [
+					['CGV Vincom Center Bà Triệu', 21.0110831, 105.847322, 15],
+					['CGV Vincom Nguyễn Chí Thanh', 21.0232842, 105.8070238, 15],
+					['CGV Aeon Long Biên', 21.0265591, 105.8984919, 15],
+					['CGV Hà Nội Centerpoint', 21.0048854, 105.8025138, 15],
+					['CGV Mipec Tower', 21.0059122, 105.8211195, 15],
+					['CGV Vincom Mega Mall Royal City', 21.0030263, 105.8132952, 15],
+					['CGV Vincom Long Biên', 21.0509866, 105.9141536, 15],
+					['CGV Artemis Hà Nội', 20.9996882, 105.8261619, 15],
+					['CGV Vincom Mega Mall Times City', 20.9986464, 105.8332327, 15],
+					['CGV Rice City', 20.9634609, 105.8208142, 15],
+					['CGV Hồ Gươm Plaza', 20.9790077, 105.7834491, 15],
+
+					['Lotte Cinema Keangnam', 21.0170462, 105.7814045, 15],
+					['Lotte Cinema Hà Đông', 20.990354, 105.782544, 15],
+					['Lotte Cinema Thăng Long', 20.990354, 105.782544, 15],
+
+					['Beta Cineplex Thanh Xuân', 21.0026136, 105.8022909, 15],
+					['Beta Cineplex Mỹ Đình', 21.0122114, 105.7754499, 15],
+
+					['Platinum Cinema Garden', 21.01535, 105.7757443, 15],
+					['BHD Star Vincom', 21.0063122, 105.8316422, 15],
+					['Rạp Quốc gia', 21.0167483, 105.8155677, 15],
+					['Galaxy Cinema Long Biên', 21.0454409, 105.8660349, 15],
+					['Fafim Cinema', 21.0026454, 105.8202419, 15],
+					['Rạp Tháng 8', 21.0214854, 105.8503522, 15],
+					['Kim Đồng', 21.0238755, 105.8507703, 15],
+				];
+				var infowindow = new google.maps.InfoWindow();
+				var marker, i, cinema;
+				var distance;
+				var list, entry;
+				var distanceArr = [];
+
+				for (i = 0; i < locations.length; i++) {
+					cinema = new google.maps.LatLng(locations[i][1], locations[i][2]);
+
+					marker = new google.maps.Marker({
+						position: cinema,
+						map: map
+					});
+
+					google.maps.event.addListener(marker, 'click', (function(marker, i) {
+						return function() {
+							infowindow.setContent(locations[i][0]);
+							infowindow.open(map, marker);
+						}
+					})(marker, i));
+
+					distance = google.maps.geometry.spherical.computeDistanceBetween(myLatLng, cinema)
+					//distance = distance / 1000 + 'km'
+					distanceArr.push([distance, locations[i][0]])
+				}
+				distanceArr.sort(function(a, b) {
+					return a[0] - b[0]
+				});
+				for (i = 0; i < distanceArr.length; i++) {
+					list = document.getElementById('list');
+					entry = document.createElement('li');
+					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] / 1000 + ' km'));
+					list.appendChild(entry);
+				}
+			})
+		}
+
+
+	}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZKcVJJ0FCXeUyYYsVl5_Y22aIOgTAxQ&callback=initMap&libraries=geometry" type="text/javascript"></script>
 
 </html>
