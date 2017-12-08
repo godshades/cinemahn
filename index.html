@@ -379,7 +379,7 @@
 
 					distance = google.maps.geometry.spherical.computeDistanceBetween(myLatLng, cinema)
 					//distance = distance / 1000 + 'km'
-					distanceArr.push([distance, locations[i][0], locations[i][1], locations[i][2]])
+					distanceArr.push([Math.round(distance * 10) / 10, locations[i][0], locations[i][1], locations[i][2]])
 
 					cinemaArr.push(cinema);
 				}
@@ -396,7 +396,7 @@
 					entry.setAttribute("id", "cinema" + i);
 					entry.setAttribute("lat", distanceArr[i][2]);
 					entry.setAttribute("lng", distanceArr[i][3]);
-					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] / 1000 + ' km'));
+					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0].toLocaleString()  + ' km'));
 					li.appendChild(entry);
 					list.appendChild(li);
 				}
