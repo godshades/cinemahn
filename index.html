@@ -289,10 +289,43 @@
 		#lstcinema a:visited {
 			color: blue;
 		}
+
+		#currentWeather {
+			overflow: hidden;
+			float: left;
+			width: 40%;
+		}
+
+		#timelineWeather {
+			overflow: hidden;
+			width: 60%;
+		}
+
+		#ifram1 {
+			border: 0px none;
+			height: 212px;
+			margin-top: -132px;
+			width: -webkit-fill-available;
+		}
+
+		#ifram2 {
+			border: 0px none;
+			height: 393px;
+			margin-top: -295px;
+			width: -webkit-fill-available;
+		}
 	</style>
 </head>
 
 <body>
+	<div id="currentWeather">
+		<iframe id="ifram1" scrolling="no" src="about:blank">
+		</iframe>
+	</div>
+	<div id="timelineWeather">
+		<iframe id="ifram2" scrolling="no" src="about:blank">
+		</iframe>
+	</div>
 	<div id="cinema">
 		<div id="googleMap" class="inline"></div>
 		<div id="lstcinema" class="inline">
@@ -312,11 +345,12 @@
 		var list, entry, li;
 		var distanceArr = [];
 		var cinemaArr = [];
+		var link;
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-				
+
 				var mapProp = {
 					center: myLatLng,
 					zoom: 13,
@@ -331,7 +365,9 @@
 				infowindow.setContent('You are here');
 				infowindow.open(map, marker);
 
-
+				link = 'https://darksky.net/forecast/' + position.coords.latitude + ',' + position.coords.longitude + '/si12/en';
+				document.getElementById('ifram1').src = link;
+				document.getElementById('ifram2').src = link;
 
 				var locations = [
 					['CGV Vincom Center Bà Triệu', 21.0110831, 105.847322, 15],
@@ -379,7 +415,7 @@
 
 					distance = google.maps.geometry.spherical.computeDistanceBetween(myLatLng, cinema)
 					//distance = distance / 1000 + 'km'
-					distanceArr.push([Math.round(distance ) / 1000, locations[i][0], locations[i][1], locations[i][2]])
+					distanceArr.push([Math.round(distance) / 1000, locations[i][0], locations[i][1], locations[i][2]])
 
 					cinemaArr.push(cinema);
 				}
@@ -396,7 +432,7 @@
 					entry.setAttribute("id", "cinema" + i);
 					entry.setAttribute("lat", distanceArr[i][2]);
 					entry.setAttribute("lng", distanceArr[i][3]);
-					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0]  + ' km'));
+					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
 					li.appendChild(entry);
 					list.appendChild(li);
 				}
@@ -416,7 +452,7 @@
 
 			}, {
 				maximumAge: 600000,
-				timeout: 5000,
+				//timeout: 5000,
 				enableHighAccuracy: true
 			});
 		}
@@ -446,7 +482,7 @@
 				}
 
 			} else {
-				//window.alert('Directions request failed due to ' + status);
+				window.alert('Directions request failed due to ' + status);
 			}
 		});
 	}
