@@ -303,8 +303,8 @@
 
 		#ifram1 {
 			border: 0px none;
-			height: 260px;
-			margin-top: -155px;
+			height: 212px;
+			margin-top: -132px;
 			width: -webkit-fill-available;
 		}
 
@@ -340,16 +340,19 @@
 
 		var myLatLng;
 		var infowindow = new google.maps.InfoWindow();
+		var golInfo = new google.maps.InfoWindow();
 		var marker, i, cinema;
 		var distance;
 		var list, entry, li;
 		var distanceArr = [];
 		var cinemaArr = [];
+		var infoWindowArr = [];
 		var link;
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
-				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+				//myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+				myLatLng = new google.maps.LatLng(21.0468179, 105.7951931)
 
 				var mapProp = {
 					center: myLatLng,
@@ -357,21 +360,26 @@
 				};
 				var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-				marker = new google.maps.Marker({
+				var currentMarker = new google.maps.Marker({
 					position: myLatLng,
 					map: map
 				});
 
-				infowindow.setContent('You are here');
-				infowindow.open(map, marker);
+				google.maps.event.addListener(currentMarker, 'click', (function(currentMarker, i) {
+					return function() {
+						infowindow.setContent('You are here');
+						infowindow.open(map, currentMarker);
+					}
+				})(currentMarker, i));
 
-				link = 'https://darksky.net/forecast/' + position.coords.latitude + ',' + position.coords.longitude + '/si12/en';
+				//link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
+				link = 'https://darksky.net/forecast/21.0468,105.7952/si12/en';
 				document.getElementById('ifram1').src = link;
 				document.getElementById('ifram2').src = link;
 
 				var locations = [
 					//HÀ NỘI
-					['CGV Vincom Center Bà Triệu', 21.0110831, 105.847322],
+					['CGV Vincom Center Bà Triệu', 21.0110831, 105.8495107],
 					['CGV Vincom Nguyễn Chí Thanh', 21.0232842, 105.8070238],
 					['CGV Aeon Long Biên', 21.0265591, 105.8984919],
 					['CGV Hà Nội Centerpoint', 21.0048854, 105.8025138],
@@ -379,24 +387,24 @@
 					['CGV Vincom Mega Mall Royal City', 21.0030263, 105.8132952],
 					['CGV Vincom Long Biên', 21.0509866, 105.9141536],
 					['CGV Artemis Hà Nội', 20.9996882, 105.8261619],
-					['CGV Vincom Mega Mall Times City', 20.9986464, 105.8332327],
+					['CGV Vincom Mega Mall Times City', 20.9942669, 105.8684911],
 					['CGV Rice City', 20.9634609, 105.8208142],
 					['CGV Hồ Gươm Plaza', 20.9790077, 105.7834491],
 
-					['Lotte Cinema Keangnam', 21.0170462, 105.7814045],
-					['Lotte Cinema Hà Đông', 20.990354, 105.782544],
-					['Lotte Cinema Thăng Long', 20.990354, 105.782544],
+					['Lotte Cinema Keangnam', 21.0170462, 105.7835932],
+					['Lotte Cinema Hà Đông', 20.9636625, 105.7696228],
+					['Lotte Cinema Thăng Long', 21.0079594, 105.7910885],
 
-					['Beta Cineplex Thanh Xuân', 21.0026136, 105.8022909],
-					['Beta Cineplex Mỹ Đình', 21.0122114, 105.7754499],
+					['Beta Cineplex Thanh Xuân', 21.0026136, 105.8001022],
+					['Beta Cineplex Mỹ Đình', 21.0119067, 105.7730692],
 
 					['Platinum Cinema Garden', 21.01535, 105.7757443],
-					['BHD Star Vincom', 21.0063122, 105.8316422],
-					['Rạp Quốc gia', 21.0167483, 105.8155677],
-					['Galaxy Cinema Long Biên', 21.0454409, 105.8660349],
-					['Fafim Cinema', 21.0026454, 105.8202419],
+					['BHD Star Vincom', 21.0064286, 105.8298065],
+					['Rạp Quốc gia', 21.0167483, 105.813379],
+					['Galaxy Cinema Long Biên', 21.0454663, 105.8635872],
+					['Fafim Cinema', 21.0019643, 105.8181819],
 					['Rạp Tháng 8', 21.0214854, 105.8503522],
-					['Kim Đồng', 21.0238755, 105.8507703],
+					['Rạp Kim Đồng', 21.0238755, 105.8507703],
 
 					//HCM
 					['Cinestar Hai Bà Trưng', 10.782454, 106.695984],
@@ -538,8 +546,41 @@
 
 				$('a').click(function(e) {
 					cinema = new google.maps.LatLng($(this).attr('lat'), $(this).attr('lng'));
+					for (var i = 0; i < infoWindowArr.length; i++) {
+						infoWindowArr[i].close()
+					}
+					//calculateAndDisplayRoute(map, directionsDisplay, directionsService, directionDisplay, myLatLng, cinema);
+					directionsService.route({
+						origin: myLatLng,
+						destination: cinema,
+						provideRouteAlternatives: true,
+						travelMode: google.maps.TravelMode.DRIVING,
+						optimizeWaypoints: true
+					}, function(response, status) {
+						if (status == google.maps.DirectionsStatus.OK) {
+							for (i = 0; i < directionsDisplay.length; i++) {
+								directionsDisplay[i].setMap(null);
+							}
 
-					calculateAndDisplayRoute(map, directionsDisplay, directionsService, directionDisplay, myLatLng, cinema);
+							for (i = 0; i < response.routes.length; i++) {
+								directionDisplay = new google.maps.DirectionsRenderer({
+									map: map,
+									directions: response,
+									routeIndex: i
+								})
+								directionsDisplay.push(directionDisplay);
+								var infoLeg = new google.maps.InfoWindow();
+								infoLeg = new google.maps.InfoWindow();
+								var step = Math.floor((response.routes[i].legs[0].steps.length / 2) + 1);
+								infoLeg.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+								infoLeg.setPosition(response.routes[i].legs[0].steps[step].end_location);
+								infoLeg.open(map);
+								infoWindowArr.push(infoLeg);
+							}
+						} else {
+							window.alert('Directions request failed due to ' + status);
+						}
+					});
 				});
 
 			}, function error(msg) {
@@ -555,12 +596,13 @@
 
 	}
 
-	function calculateAndDisplayRoute(map, directionsDisplay, directionsService, directionDisplay, pointA, pointB) {
+	function calculateAndDisplayRoute(map, directionsDisplay, directionsService, directionDisplay, pointA, pointB, golInfo) {
 		directionsService.route({
 			origin: pointA,
 			destination: pointB,
 			provideRouteAlternatives: true,
-			travelMode: google.maps.TravelMode.DRIVING
+			travelMode: google.maps.TravelMode.DRIVING,
+			optimizeWaypoints: true
 		}, function(response, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				for (i = 0; i < directionsDisplay.length; i++) {
@@ -574,14 +616,18 @@
 						routeIndex: i
 					})
 					directionsDisplay.push(directionDisplay);
+					//var infoLeg = new google.maps.InfoWindow();
+					var step = Math.floor(response.routes[i].legs[0].steps.length - 1);
+					golInfo.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+					golInfo.setPosition(response.routes[i].legs[0].steps[step].end_location);
+					golInfo.open(map);
 				}
-
 			} else {
 				window.alert('Directions request failed due to ' + status);
 			}
 		});
 	}
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0MdH3ZvV1t_kmmbMiqEvyeQCFy_mxWTc&callback=initMap&libraries=geometry" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZKcVJJ0FCXeUyYYsVl5_Y22aIOgTAxQ&callback=initMap&libraries=geometry" type="text/javascript"></script>
 
 </html>
