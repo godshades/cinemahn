@@ -351,8 +351,7 @@
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
-				//myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-				myLatLng = new google.maps.LatLng(21.0468179, 105.7951931)
+				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 				var mapProp = {
 					center: myLatLng,
@@ -360,20 +359,15 @@
 				};
 				var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-				var currentMarker = new google.maps.Marker({
+				marker = new google.maps.Marker({
 					position: myLatLng,
-					map: map
-				});
+  					map: map
+  				});
+				
+				infowindow.setContent('You are here');
+ -				infowindow.open(map, marker);
 
-				google.maps.event.addListener(currentMarker, 'click', (function(currentMarker, i) {
-					return function() {
-						infowindow.setContent('You are here');
-						infowindow.open(map, currentMarker);
-					}
-				})(currentMarker, i));
-
-				//link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
-				link = 'https://darksky.net/forecast/21.0468,105.7952/si12/en';
+				link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
 				document.getElementById('ifram1').src = link;
 				document.getElementById('ifram2').src = link;
 
