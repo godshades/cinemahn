@@ -263,17 +263,17 @@
 		#cinema {
 			overflow: hidden;
 			width: 100%;
-			height: 30%;
+			height: 50%;
 		}
 
 		#googleMap {
 			float: left;
-			width: 70%;
+			width: 75%;
 			height: 100%;
 		}
 
 		#lstcinema {
-			width: 30%;
+			width: 25%;
 			height: 100%;
 			overflow: auto;
 		}
@@ -303,8 +303,8 @@
 
 		#ifram1 {
 			border: 0px none;
-			height: 260px;
-			margin-top: -155px;
+			height: 212px;
+			margin-top: -132px;
 			width: -webkit-fill-available;
 		}
 
@@ -351,7 +351,8 @@
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
-				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				//myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+				myLatLng = new google.maps.LatLng(21.0468179, 105.7951931)
 
 				var mapProp = {
 					center: myLatLng,
@@ -359,148 +360,198 @@
 				};
 				var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-				marker = new google.maps.Marker({
+				var currentMarker = new google.maps.Marker({
 					position: myLatLng,
-  					map: map
-  				});
-				
-				infowindow.setContent('You are here');
- -				infowindow.open(map, marker);
+					map: map
+				});
 
-				link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
+				google.maps.event.addListener(currentMarker, 'click', (function(currentMarker, i) {
+					return function() {
+						infowindow.setContent('You are here');
+						infowindow.open(map, currentMarker);
+					}
+				})(currentMarker, i));
+
+				//link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
+				link = 'https://darksky.net/forecast/21.0468,105.7952/si12/en';
 				document.getElementById('ifram1').src = link;
 				document.getElementById('ifram2').src = link;
 
 				var locations = [
-					//HÀ NỘI
+					//CGV Cinemas
 					['CGV Vincom Center Bà Triệu', 21.0110831, 105.8495107],
-					['CGV Vincom Nguyễn Chí Thanh', 21.0232842, 105.8070238],
-					['CGV Aeon Long Biên', 21.0265591, 105.8984919],
-					['CGV Hà Nội Centerpoint', 21.0048854, 105.8025138],
-					['CGV Mipec Tower', 21.0059122, 105.8211195],
-					['CGV Vincom Mega Mall Royal City', 21.0030263, 105.8132952],
-					['CGV Vincom Long Biên', 21.0509866, 105.9141536],
-					['CGV Artemis Hà Nội', 20.9996882, 105.8261619],
+					['CGV Vincom Nguyễn Chí Thanh', 21.0232842, 105.8092125],
+					['CGV Aeon Long Biên', 21.0265591, 105.9006806],
+					['CGV Hà Nội Centerpoint', 21.0048854, 105.8047025],
+					['CGV Mipec Tower', 21.0059122, 105.8233082],
+					['CGV Vincom Mega Mall Royal City', 21.0030263, 105.8154839],
+					['CGV Vincom Long Biên', 21.0509866, 105.9163423],
+					['CGV Artemis Hà Nội', 20.9996882, 105.8283506],
 					['CGV Vincom Mega Mall Times City', 20.9942669, 105.8684911],
-					['CGV Rice City', 20.9634609, 105.8208142],
-					['CGV Hồ Gươm Plaza', 20.9790077, 105.7834491],
+					['CGV Rice City', 20.9634609, 105.8230029],
+					['CGV Hồ Gươm Plaza', 20.9790077, 105.7856378],
+					['CGV IPH Hà Nội', 21.036056, 105.782275],
 
+					['CGV Golden Plaza', 10.7536086, 106.6547646],
+					['CGV Vincom Đồng Khởi', 10.7779234, 106.7019528],
+					['CGV Parkson Đồng Khởi', 10.7772273, 106.7021943],
+					['CGV Saigonres Nguyễn Xí', 10.8164305, 106.7072272],
+					['CGV Liberty Citypoint', 10.7746086, 106.7008277],
+					['CGV CT Plaza', 10.813248, 106.6658153],
+					['CGV Aeon Bình Tân', 10.7432125, 106.6131745],
+					['CGV Thảo Điền Pearl', 10.8017757, 106.7328027],
+					['CGV Parkson Paragon', 10.729619, 106.721674],
+					['CGV Hoàng Văn Thụ', 10.7989085, 106.6598939],
+					['CGV Pearl Plaza', 10.8001177, 106.7184879],
+					['CGV Thủ Đức', 10.850432, 106.7652939],
+					['CGV Celadon Tân Phú', 10.801702, 106.6179746],
+					['CGV Hùng Vương Plaza', 10.7557866, 106.663047],
+					['CGV Gò Vấp', 10.8267795, 106.6891474],
+					['CGV Pandora City', 10.8069193, 106.6342392],
+					['CGV VivoCity', 10.7301828, 106.7038375],
+					['CGV Crescent Mall', 10.72907, 106.718945],
+
+					['CGV Vincom Rạch Giá', 10.003258, 105.081058],
+					['CGV Vincom Trà Vinh', 9.935693, 106.336814],
+					['CGV Vincom Vị Thanh', 9.783455, 105.47037],
+					['CGV Lam Sơn Square', 10.3485847, 107.0740269],
+					['CGV Bình Dương Square', 10.9842298, 106.6671181],
+					['CGV Aeon Canary', 10.9309662, 106.7119234],
+					['CGV Empire', 10.9747974, 106.6565686],
+					['CGV Vincom Vĩnh Long', 10.246386, 105.977636],
+					['CGV Vincom Phú Yên', 13.101163, 109.30882],
+					['CGV Thùy Dương Plaza', 20.8463948, 106.7068879],
+					['CGV Vĩnh Trung Plaza', 16.0666435, 108.2130983],
+					['CGV Vincom Đà Nẵng', 16.0710745, 108.2301815],
+					['CGV Coopmart Biên Hòa', 10.9584608, 106.8339886],
+					['CGV BigC Đồng Nai', 10.9066022, 106.8509585],
+					['CGV Marine Plaza Hạ Long', 20.955323, 107.0127904],
+					['CGV Vincom Hạ Long', 20.9502607, 107.0841509],
+					['CGV Sense City', 10.0341076, 105.7859695],
+					['CGV Vincom Hùng Vương', 10.0453833, 105.7796137],
+					['CGV Vincom Xuân Khánh', 10.0246788, 105.7749034],
+					['CGV Kim Cúc Plaza', 13.7539247, 109.2077195],
+					['CGV BigC Nha Trang', 12.2557792, 109.1702839],
+					['CGV Buôn Mê Thuột', 12.6934449, 108.0643639],
+					['CGV Vincom Yên Bái', 21.708523, 104.881632],
+					['CGV Vincom Hà Tĩnh', 18.3358861, 105.8983069],
+
+					//Lotte Cinema
 					['Lotte Cinema Keangnam', 21.0170462, 105.7835932],
-					['Lotte Cinema Hà Đông', 20.9636625, 105.7696228],
-					['Lotte Cinema Thăng Long', 21.0079594, 105.7910885],
+					['Lotte Cinema Hà Đông', 20.9636625, 105.7718115],
+					['Lotte Cinema Thăng Long', 21.0079594, 105.7932772],
+					
+					['Lotte Cinema Gò Vấp', 10.8382627, 106.6716334],
+					['Lotte Cinema Phú Thọ', 10.7631133, 106.6570733],
+					['Lotte Cinema Thủ Đức', 10.8712548, 106.7692378],
+					['Lotte Cinema Cộng Hoà', 10.8007354, 106.6530744],
+					['Lotte Cinema Nam Sài Gòn', 10.7409423, 106.7023147],
+					['Lotte Cinema Nowzone', 10.7638952, 106.6827205],
+					['Lotte Cinema Diamond', 10.7807545, 106.6985286],
+					['Lotte Cinema Cantavil', 10.8017125, 106.7471659],
+					
+					['Lotte Cinema Huế', 16.4596076, 107.5993896],
+					['Lotte Cinema Ninh Kiều', 10.0422661, 105.7669419],
+					['Lotte Cinema Cần Thơ', 10.0143628, 105.7848188],
+					['Lotte Cinema Ninh Bình', 20.2421667, 106.0041833],
+					['Lotte Cinema Tuyên Quang', 21.8189594, 105.2052689],
+					['Lotte Cinema Hải Dương', 20.9301829, 106.314114],
+					['Lotte Cinema Đồng Nai', 10.948776, 106.8709498],
+					['Lotte Cinema Biên Hoà', 10.9577074, 106.8431749],
+					['Lotte Cinema Hạ Long', 20.9421623, 107.1105517],
+					['Lotte Cinema Bắc Giang', 21.2667501, 106.2083048],
+					['Lotte Cinema Long Xuyên', 10.383699, 105.4373093],
+					['Lotte Cinema Thái Bình', 20.4444697, 106.336863],
+					['Lotte Cinema Tây Ninh', 11.3126047, 106.0958367],
+					['Lotte Cinema Nha Trang', 12.2483989, 109.1867668],
+					['Lotte Cinema Đà Nẵng', 16.0351775, 108.2290006],
+					['Lotte Cinema Bình Dương', 10.9050217, 106.711583],
+					['Lotte Cinema Phan Thiết', 10.9387914, 108.1109073],
+					['Lotte Cinema Vũng Tàu', 10.3498331, 107.0935979],
+					['Lotte Cinema Việt Trì', 21.3122469, 105.3955485],
+					['Lotte Cinema Hải Phòng', 20.8658747, 106.6913653],
+					['Lotte Cinema Vinh', 18.6878634, 105.6657331],
+					['Lotte Cinema Nam Định', 20.4299976, 106.1613687],
 
-					['Beta Cineplex Thanh Xuân', 21.0026136, 105.8001022],
-					['Beta Cineplex Mỹ Đình', 21.0119067, 105.7730692],
+					//Galaxy Cinema
+					['Galaxy Mipec Long Biên', 21.0454663, 105.8657759],
 
-					['Platinum Cinema Garden', 21.01535, 105.7757443],
-					['BHD Star Vincom', 21.0064286, 105.8298065],
-					['Rạp Quốc gia', 21.0167483, 105.813379],
-					['Galaxy Cinema Long Biên', 21.0454663, 105.8635872],
-					['Fafim Cinema', 21.0019643, 105.8181819],
-					['Rạp Tháng 8', 21.0214854, 105.8503522],
-					['Rạp Kim Đồng', 21.0238755, 105.8507703],
+					['Galaxy Cinema Nguyễn Du', 10.772937, 106.693387],
+					['Galaxy Cinema Trung Chánh', 10.8553679, 106.6080076],
+					['Galaxy Cinema Quang Trung', 10.8347421, 106.6622241],
+					['Galaxy Cinema Phạm Văn Chí', 10.7409146, 106.6383598],
+					['Galaxy Cinema Tân Bình', 10.7902587, 106.6407119],
+					['Galaxy Cinema Kinh Dương Vương', 10.7500903, 106.6281603],
+					['Galaxy Cinema Huỳnh Tấn Phát', 10.7124455, 106.7369246],
 
-					//HCM
-					['Cinestar Hai Bà Trưng', 10.782454, 106.695984],
-					['Cinestar Cinema Quốc Thanh', 10.763907, 106.6851049],
-					['Lotte Cinema Gò Vấp', 10.8382285, 106.6690033],
-					['Lotte Cinema Phú Thọ', 10.7631133, 106.6548846],
-					['Lotte Cinema Thủ Đức', 10.8712548, 106.7670491],
-					['Lotte Cinema Cộng Hoà', 10.8007354, 106.6508857],
-					['Lotte Cinema Nam Sài Gòn', 10.7409423, 106.700126],
-					['Lotte Cinema Nowzone', 10.7638952, 106.6805318],
-					['Lotte Cinema Diamond', 10.7809704, 106.6980006],
-					['Lotte Cinema Cantavil', 10.8017125, 106.7449772],
-					['BHD Star Cineplex - Bitexco', 10.7716687, 106.7043854],
-					['BHD Star Cineplex - Vincom Thảo Điền', 10.8023027, 106.7387646],
-					['BHD Star Cineplex - 3/2', 10.7758833, 106.6804691],
-					['BHD Star Cineplex - Phạm Hùng', 10.7335534, 106.6722166],
-					['BHD Star Cineplex - Vincom Quang Trung', 10.8293161, 106.6703183],
-					['BHD Star Cineplex - Vincom Lê Văn Việt', 10.8455374, 106.7791753],
-					['Galaxy Cinema Nguyễn Du', 10.772937, 106.6911983],
-					['Galaxy Cinema Trung Chánh', 10.8553679, 106.6058189],
-					['Galaxy Cinema Quang Trung', 10.8347421, 106.6600354],
-					['Galaxy Cinema Phạm Văn Chí', 10.7409146, 106.6361711],
-					['Galaxy Cinema Tân Bình', 10.7902587, 106.6385232],
-					['Galaxy Cinema Kinh Dương Vương', 10.7500903, 106.6259716],
-					['Galaxy Cinema Huỳnh Tấn Phát', 10.7124455, 106.7347359],
-					['Đống Đa Cinema', 10.753524, 106.6720583],
-					['MegaGS Cinema - Cao Thắng', 10.769061, 106.6809273],
-					['CGV - Golden Plaza', 10.7536086, 106.6525759],
-					['CGV - Vincom Đồng Khởi', 10.7779234, 106.6997641],
-					['CGV - Parkson Đồng Khởi', 10.7772273, 106.7000056],
-					['CGV - CGV Saigonres Nguyễn Xí', 10.8164305, 106.7050385],
-					['CGV - Liberty Citypoint', 10.7746086, 106.698639],
-					['CGV - CT Plaza', 10.813248, 106.6636266],
-					['CGV - Aeon Bình Tân', 10.7432125, 106.6109858],
-					['CGV - Thảo Điền Pearl', 10.8017757, 106.730614],
-					['CGV - Parkson Paragon', 10.729619, 106.7194853],
-					['CGV - Hoàng Văn Thụ', 10.7989085, 106.6577052],
-					['CGV - Pearl Plaza', 10.8001177, 106.7162992],
-					['CGV - Thủ Đức', 10.850432, 106.7631052],
-					['CGV - Celadon Tân Phú', 10.801702, 106.6179746],
-					['CGV - Hùng Vương Plaza', 10.7557866, 106.6608583],
-					['CGV - Gò Vấp', 10.8267795, 106.6869587],
-					['CGV - Pandora City', 10.8069193, 106.6320505],
-					['CGV - VivoCity', 10.7301828, 106.7016488],
-					['CGV - Crescent Mall', 10.72907, 106.7167563],
-					['Cinebox - Lý Chính Thắng', 10.7804476, 106.6804078],
+					['Galaxy Cinema Đà Nẵng', 16.0666313, 108.1865912],
+					['Galaxy Cinema Hải Phòng', 20.8562254, 106.686444],
+					['Galaxy Cà Mau', 9.1775886, 105.1542908],
+					['Galaxy Cinema Vinh', 18.6765293, 105.6770785],
+					['Galaxy Bến Tre', 10.2413981, 106.3767538],
 
-					//Đà Nẵng
-					['Lotte Cinema - Đà Nẵng', 16.0351775, 108.2290006],
-					['Galaxy Cinema - Đà Nẵng', 16.0666313, 108.1844025],
-					['Starlight - Đà Nẵng', 16.0662446, 108.2011324],
-					['CGV - Vĩnh Trung Plaza', 16.0666435, 108.2109096],
-					['CGV - Vincom Đà Nẵng', 16.0710745, 108.2279928],
+					
+					//Beta Cineplex
+					['Beta Cineplex Thái Nguyên', 21.5789802, 105.8168203],
+					['Beta Cineplex Biên Hòa', 10.9470274, 106.824883],
+					['Beta Cineplex Thanh Xuân', 21.0026136, 105.8022909],
+					['Beta Cineplex Mỹ Đình', 21.0119067, 105.7752579],
+					['Beta Cineplex Thanh Hóa', 19.8066892, 105.7780607],
+					['Beta Cineplex Bắc Giang', 21.2769679, 106.194764],
+					['Beta Cineplex Đan Phượng', 21.0750687, 105.7017894],
+					['Beta Cineplex Long Xuyên', 10.3786468, 105.4474761],
+					['Beta Cineplex Cao Thắng', 10.7741087, 106.6775114],
+					['Beta FLC Twin Tower', 21.0341676, 105.7946568],
+					['Beta Cineplex Nha Trang', 12.2489006, 109.1938314],
 
-					//Hải Phòng
-					['Lotte Cinema Hải Phòng', 20.8658747, 106.6891766],
-					['Galaxy Cinema Hải Phòng', 20.8562254, 106.6842553],
-					['CGV - Thùy Dương Plaza', 20.8463948, 106.7046992],
+					//BHD Star Cineplex
+					['BHD Star Vincom Phạm Ngọc Thạch', 21.0064286, 105.8319952],
+					['BHD Cầu Giấy', 21.0354272, 105.7944174],
+					['BHD Huế', 16.4631061, 107.5945241],
+					['BHD Star Cineplex - Bitexco', 10.771681, 106.704395],
+					['BHD Star Cineplex - Vincom Thảo Điền', 10.8023027, 106.7409533],
+					['BHD Star Cineplex - 3/2', 10.775898, 106.680465],
+					['BHD Star Cineplex - Phạm Hùng', 10.7335534, 106.6744053],
+					['BHD Star Cineplex - Vincom Quang Trung', 10.8293161, 106.672507],
+					['BHD Star Cineplex - Vincom Lê Văn Việt', 10.845552, 106.779172],
+					
+					//Starlight
+					['Starlight Nguyễn Kim Đà Nẵng', 16.0662446, 108.2033211],
+					['Starlight Buôn Ma Thuột', 12.6817914, 108.0439885],
+					['Starlight Quy Nhơn', 13.773944, 109.2333608],
+					['Starlight Bạc Liêu', 9.2871169, 105.7220206],
+					['Starlight Bảo Lộc', 11.5431619, 107.8047938],
+					['Starlight Huế', 16.4710245, 107.5873903],
 
-					//Biên Hoà
-					['Lotte Cinema - Biên Hòa', 10.9577074, 106.8431749],
-					['Lotte Cinema - Đồng Nai', 10.9486682, 106.8711227],
-					['Beta Cineplex Biên Hòa', 10.9470274, 106.8226943],
-					['CGV - Coop Mart Biên Hoà', 10.9584608, 106.8317999],
-					['CGV - Big C Đồng Nai', 10.9066022, 106.8487698],
+					//Cinestar
+					['Cinestar Hai Bà Trưng', 10.782454, 106.6981727],
+					['Cinestar Cinema Quốc Thanh', 10.763907, 106.6872936],
+					['Cinestar Đà Lạt', 11.9382909, 108.4458008],
+					
+					//Platinum Cineplex
+					['Platinum Cinema Garden', 21.01535, 105.777933],
+					['Platinum Cineplex – Nha Trang', 12.2478777, 109.195772],
 
-					//Nha Trang
-					['Lotte Cinema Nha Trang', 12.2483989, 109.1845781],
-					['Platinum Cineplex – Nha Trang', 12.2478777, 109.1935833],
-
-					//Bình Dương
-					['Lotte Cinema - Bình Dương', 10.9050217, 106.711583],
-					['CGV - Bình Dương Square', 10.9842298, 106.6649294],
-					['CGV - Aeon Canary', 10.9309662, 106.7097347],
+					//Other
+					['Rạp Quốc gia', 21.0167483, 105.8155677],
+					['Fafim Cinema', 21.0019643, 105.8203706],
+					['Rạp Tháng 8', 21.0214854, 105.8525409],
+					['Rạp Kim Đồng', 21.0238755, 105.852959],
+					['Đống Đa Cinema', 10.753524, 106.674247],
+					['MegaGS Cinema - Cao Thắng', 10.769061, 106.683116],
+					['Cinebox - Lý Chính Thắng', 10.7804476, 106.6825965],
 					['Empire Cineplex Bình Dương', 10.9746822, 106.656628],
-
-					//Phan Thiết
-					['Lotte Cinema - Phan Thiết', 10.9387914, 108.1109073],
-
-					//Hạ Long
-					['Lotte Cinema Hạ Long', 20.9421623, 107.108363],
-					['CGV - Marine Plaza', 20.955323, 107.0106017],
-					['CGV - Vincom Hạ Long', 20.9502607, 107.0819622],
-
-					//Cần Thơ
-					['Lotte Cinema Ninh Kiều', 10.0422661, 105.7647532],
-					['Lotte Cinema - Cái Răng', 10.0142849, 105.782547],
-					['CGV - Vincom Xuân Khánh', 10.0246788, 105.7727147],
-					['CGV - Sense City', 10.0341076, 105.7837808],
-					['CGV - Vincom Hùng Vương', 10.0453833, 105.777425],
-
-					//Vũng Tàu
-					['Lotte Cinema Vũng Tàu', 10.3498331, 107.0914092],
-					['CGV - Lam Sơn Square', 10.3485847, 107.0718382],
 				];
+
+				var iconCinema = 'https://maps.google.com/mapfiles/kml/pal2/icon22.png';
 
 				for (i = 0; i < locations.length; i++) {
 					cinema = new google.maps.LatLng(locations[i][1], locations[i][2]);
 
 					marker = new google.maps.Marker({
 						position: cinema,
-						map: map
+						map: map,
+						icon: iconCinema
 					});
 
 					google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -529,8 +580,7 @@
 					entry.setAttribute("id", "cinema" + i);
 					entry.setAttribute("lat", distanceArr[i][2]);
 					entry.setAttribute("lng", distanceArr[i][3]);
-					entry.appendChild(
-						document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
+					entry.appendChild(document.createTextNode( distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
 					li.appendChild(entry);
 					list.appendChild(li);
 				}
@@ -561,14 +611,15 @@
 								directionDisplay = new google.maps.DirectionsRenderer({
 									map: map,
 									directions: response,
-									routeIndex: i
+									routeIndex: i,
+									suppressMarkers: true,
+									suppressInfoWindows: true
 								})
 								directionsDisplay.push(directionDisplay);
 								var infoLeg = new google.maps.InfoWindow();
 								infoLeg = new google.maps.InfoWindow();
-								var step = Math.floor((response.routes[i].legs[0].steps.length / 2) + 1);
-								infoLeg.setContent(
-									response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+								var step = Math.ceil((response.routes[i].legs[0].steps.length / 2) );
+								infoLeg.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
 								infoLeg.setPosition(response.routes[i].legs[0].steps[step].end_location);
 								infoLeg.open(map);
 								infoWindowArr.push(infoLeg);
@@ -614,8 +665,7 @@
 					directionsDisplay.push(directionDisplay);
 					//var infoLeg = new google.maps.InfoWindow();
 					var step = Math.floor(response.routes[i].legs[0].steps.length - 1);
-					golInfo.setContent(
-						response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+					golInfo.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
 					golInfo.setPosition(response.routes[i].legs[0].steps[step].end_location);
 					golInfo.open(map);
 				}
