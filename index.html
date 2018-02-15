@@ -529,7 +529,8 @@
 					entry.setAttribute("id", "cinema" + i);
 					entry.setAttribute("lat", distanceArr[i][2]);
 					entry.setAttribute("lng", distanceArr[i][3]);
-					entry.appendChild(document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
+					entry.appendChild(
+						document.createTextNode('Your location to ' + distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
 					li.appendChild(entry);
 					list.appendChild(li);
 				}
@@ -538,7 +539,7 @@
 				var directionDisplay;
 				var directionsDisplay = [];
 
-				$('a').click(function(e) {
+				$('#lstcinema a').click(function(e) {
 					cinema = new google.maps.LatLng($(this).attr('lat'), $(this).attr('lng'));
 					for (var i = 0; i < infoWindowArr.length; i++) {
 						infoWindowArr[i].close()
@@ -566,7 +567,8 @@
 								var infoLeg = new google.maps.InfoWindow();
 								infoLeg = new google.maps.InfoWindow();
 								var step = Math.floor((response.routes[i].legs[0].steps.length / 2) + 1);
-								infoLeg.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+								infoLeg.setContent(
+									response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
 								infoLeg.setPosition(response.routes[i].legs[0].steps[step].end_location);
 								infoLeg.open(map);
 								infoWindowArr.push(infoLeg);
@@ -612,7 +614,8 @@
 					directionsDisplay.push(directionDisplay);
 					//var infoLeg = new google.maps.InfoWindow();
 					var step = Math.floor(response.routes[i].legs[0].steps.length - 1);
-					golInfo.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+					golInfo.setContent(
+						response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
 					golInfo.setPosition(response.routes[i].legs[0].steps[step].end_location);
 					golInfo.open(map);
 				}
