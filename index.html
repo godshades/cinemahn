@@ -301,16 +301,16 @@
 			width: 60%;
 		}
 
-		#ifram1 {
+		#iframe1 {
 			border: 0px none;
-			height: 212px;
-			margin-top: -132px;
+			height: 260px;
+			margin-top: -155px;
 			width: -webkit-fill-available;
 		}
 
-		#ifram2 {
+		#iframe2 {
 			border: 0px none;
-			height: 393px;
+			height: 400px;
 			margin-top: -295px;
 			width: -webkit-fill-available;
 		}
@@ -319,11 +319,11 @@
 
 <body>
 	<div id="currentWeather">
-		<iframe id="ifram1" scrolling="no" src="about:blank">
+		<iframe id="iframe1" scrolling="no" src="about:blank">
 		</iframe>
 	</div>
 	<div id="timelineWeather">
-		<iframe id="ifram2" scrolling="no" src="about:blank">
+		<iframe id="iframe2" scrolling="no" src="about:blank">
 		</iframe>
 	</div>
 	<div id="cinema">
@@ -372,8 +372,8 @@
 				})(currentMarker, i));
 
 				link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
-				document.getElementById('ifram1').src = link;
-				document.getElementById('ifram2').src = link;
+				document.getElementById('iframe1').src = link;
+				document.getElementById('iframe2').src = link;
 
 				var locations = [
 					//CGV Cinemas
