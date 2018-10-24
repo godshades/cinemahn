@@ -1,242 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset='utf-8' />
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css' rel='stylesheet' />
 	<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js'></script>
-	<script>
-		$(document).ready(function() {
-			//Calendar
-			var date = new Date();
-			var d = date.getDate();
-			var m = date.getMonth();
-			var y = date.getFullYear();
-
-			$('#calendar').fullCalendar({
-				header: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'month,agendaWeek,agendaDay'
-				},
-				displayEventTime: false,
-				editable: true,
-				events: [{
-						title: 'CGV tăng 3',
-						start: '22:00',
-						dow: [1, 2, 3, 4, 5],
-						description: '50K sau 22h',
-						url: 'https://rapchieuphim.com/khuyen-mai/xem-phim-tang-3-gia-chi-50k-tai-cgv'
-					},
-					{
-						title: 'Beta - Thứ Ba vui vẻ',
-						start: '08:30',
-						dow: [2],
-						description: '45k (2D) và 65k (3D)',
-						url: 'https://moveek.com/khuyen-mai/beta-cineplex-thu-ba-vui-ve/'
-					},
-					{
-						title: 'Lotte LOVELY TUESDAY',
-						start: '08:30',
-						dow: [2],
-						description: '45-60k (2D) và 75-90k (3D)',
-						url: 'https://lottecinemavn.com/vi-vn/su-kien/lovely-tuesday-(tu-15-09).aspx'
-					},
-					{
-						title: 'Platinum Special Couple\'s Day',
-						start: '10:00',
-						dow: [2],
-						description: 'mua 2 vé tặng 1 bỏng và 2 đồ uống,',
-						url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/special-couple-s-day'
-					},
-					{
-						title: 'Platinum Special Thursday',
-						start: '10:00',
-						dow: [4],
-						description: '45K 2D',
-						url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/n-a'
-					},
-					{
-						title: 'Platinum ladies\' night',
-						start: '10:00',
-						dow: [3],
-						description: 'giảm 50% cho vé thứ 2 và 1 phiếu giảm 50% cho 1 loại combo tại quầy Concessions cho nữ',
-						url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/ladies-night'
-					},
-				],
-				eventClick: function(event) {
-					if (event.url) {
-						window.open(event.url);
-						return false;
-					}
-				},
-				eventRender: function(event, element) {
-					element.find('.fc-title').append("<br/>" + event.description);
-				}
-			});
-			// adding a custom events:
-			$('#calendar').fullCalendar('addEventSource',
-				function(start, end, timezone, callback) {
-
-					var events = [];
-
-					var y = start._d.getFullYear(),
-						m = start._d.getMonth();
-					var firstDay = new Date(y, m, 1);
-					var lastDay = new Date(y, m + 1, 0);
-
-					var test_date = new Date(lastDay);
-					while (test_date.getDay() !== 1) {
-						test_date.setDate(test_date.getDate() - 1);
-					}
-
-					// Last monday of last month
-					if (test_date.is().monday()) {
-						events.push({
-								title: 'CGV CULTURE DAY',
-								start: '08:30',
-								start: test_date,
-								description: '50K 2D',
-								url: 'https://www.cgv.vn/default/newsoffer/cgv-culture-day/'
-							}, // CGV
-							{
-								title: 'Lotte Big Smile Day',
-								start: '08:30',
-								start: test_date,
-								description: '45K 2D',
-								url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/big-smile-day-45,000-50,000-%C4%91ong-ve-xem-phim-t.aspx'
-							} // lottecinema
-						);
-					}
-
-					y = end._d.getFullYear(),
-						m = end._d.getMonth() - 1;
-					firstDay = new Date(y, m, 1);
-					lastDay = new Date(y, m + 1, 0);
-
-					test_date = new Date(lastDay);
-
-					while (test_date.getDay() !== 1) {
-						test_date.setDate(test_date.getDate() - 1);
-					}
-
-					// Last monday of current month
-					if (test_date.is().monday()) {
-						events.push({
-								title: 'CGV CULTURE DAY',
-								start: '08:30',
-								start: test_date,
-								description: '50K 2D',
-								url: 'https://www.cgv.vn/default/newsoffer/cgv-culture-day/'
-							}, // CGV
-							{
-								title: 'Lotte Big Smile Day',
-								start: '08:30',
-								start: test_date,
-								description: '45K 2D',
-								url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/big-smile-day-45,000-50,000-%C4%91ong-ve-xem-phim-t.aspx'
-							} // lottecinema
-						);
-					}
-
-
-					// First wednesday current month
-					y = start._d.getFullYear(),
-						m = start._d.getMonth();
-					firstDay = new Date(y, m, 1);
-					lastDay = new Date(y, m + 1, 0);
-
-					test_date = new Date(lastDay);
-					while (test_date.getDay() !== 3) {
-						test_date.setDate(test_date.getDate() + 1);
-					}
-
-					if (test_date.is().wednesday()) {
-						events.push({
-							title: 'BHD B\'DAY',
-							start: '08:30',
-							start: test_date,
-							description: '45K 2D',
-							url: 'http://www.bhdstar.vn/deals/bday-2/'
-						});
-					}
-
-					// First wednesday next month
-					y = end._d.getFullYear(),
-						m = end._d.getMonth();
-					firstDay = new Date(y, m, 1);
-					lastDay = new Date(y, m + 1, 0);
-
-					test_date = new Date(firstDay);
-					while (test_date.getDay() !== 3) {
-						test_date.setDate(test_date.getDate() + 1);
-					}
-
-					if (test_date.is().wednesday()) {
-						events.push({
-							title: 'BHD B\'DAY',
-							start: '08:30',
-							start: test_date,
-							description: '45K 2D',
-							url: 'http://www.bhdstar.vn/deals/bday-2/'
-						});
-					}
-
-					// First monday current month
-					y = start._d.getFullYear(),
-						m = start._d.getMonth();
-					firstDay = new Date(y, m, 1);
-					lastDay = new Date(y, m + 1, 0);
-
-					test_date = new Date(lastDay);
-					while (test_date.getDay() !== 1) {
-						test_date.setDate(test_date.getDate() + 1);
-					}
-
-					if (test_date.is().monday()) {
-						events.push({
-							title: 'Beta - MAD SALE DAY',
-							start: '08:30',
-							start: test_date,
-							description: '45K 2D & tặng 1 bỏng (Phụ thu 5k đối với phim bom tấn)',
-							url: 'https://betacineplex.vn/tin-moi/bung-no-voi-mad-sale-day/118'
-						});
-
-					}
-
-					// First monday next month
-					y = end._d.getFullYear(),
-						m = end._d.getMonth();
-					firstDay = new Date(y, m, 1);
-					lastDay = new Date(y, m + 1, 0);
-
-					test_date = new Date(firstDay);
-					while (test_date.getDay() !== 1) {
-						test_date.setDate(test_date.getDate() + 1);
-					}
-
-					if (test_date.is().monday()) {
-						events.push({
-							title: 'Beta - MAD SALE DAY',
-							start: '08:30',
-							start: test_date,
-							description: '45K 2D & tặng 1 bỏng (Phụ thu 5k đối với phim bom tấn)',
-							url: 'https://betacineplex.vn/tin-moi/bung-no-voi-mad-sale-day/118'
-						});
-
-					}
-
-					// return events generated
-					callback(events);
-				}
-			);
-		});
-	</script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	 crossorigin="anonymous">
 	<style>
 		html {
 			width: 100%;
@@ -249,6 +20,10 @@
 			font-family: 'Roboto', sans-serif;
 			font-size: 14px;
 			height: 100%;
+		}
+
+		#menu>li {
+			display: inline;
 		}
 
 		#calendar {
@@ -316,6 +91,11 @@
 			width: -webkit-fill-available;
 			width: -moz-available;
 		}
+
+		.nav-link{
+			text-align: center;
+		}
+
 	</style>
 </head>
 
@@ -334,7 +114,57 @@
 			<ol id="list"></ol>
 		</div>
 	</div>
-	<div id='calendar'></div>
+	<div id="myMenu">
+		<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul id="menu" class="navbar-nav mx-auto">
+					<li class="nav-item"><a class="navbar-brand" href="#" data-toggle="collapse" data-parent="#navbarSupportedContent"
+						 data-target="#calendar">Calendar</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-parent="#navbarSupportedContent"
+						 data-target="#beta">Beta
+							Cineplex</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-parent="#navbarSupportedContent"
+						 data-target="#bhd">BHD</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-parent="#navbarSupportedContent"
+						 data-target="#cgv">CGV</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-parent="#navbarSupportedContent"
+						 data-target="#lotte">Lotte
+							Cinema</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-parent="#navbarSupportedContent"
+						 data-target="#platinum">Platinum
+							Cineplex</button></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="accordion-group">
+			<div id='calendar' class="collapse show indent"></div>
+			<div id="beta" class="collapse indent">
+				<img alt="" src="https://files.betacorp.vn/files/ecm/2018/08/02/mydinh-1920x3072-01-171300-020818-59.jpg">
+			</div>
+			<div id="bhd" class="collapse">
+				<img alt="" src="https://www.bhdstar.vn/wp-content/uploads/2016/07/BHD-Star_BangGiaVe_PhamNgocThach-2D-052018.png">
+				<img alt="" src="https://www.bhdstar.vn/wp-content/uploads/2016/07/BHD-Star_BangGiaVe_PhamNgocThach-ATMOS-052018.png">
+				<img alt="" src="https://www.bhdstar.vn/wp-content/uploads/2016/04/BHD-Star_BangGiaVe-3D.jpg">
+				<img alt="" src="https://www.bhdstar.vn/wp-content/uploads/2016/07/BHD-Star_BangGiaVe-3D_Atmos-1.jpg">
+				<img alt="" src="https://www.bhdstar.vn/wp-content/uploads/2018/04/BHDStar-GiaVe-Le2018-PNT-1920x1080.jpg">
+				<img alt="" src="https://www.bhdstar.vn/wp-content/uploads/2016/10/BHD-Star_BangGiaVe_PhamNgocThach-FirstClass.jpg">
+			</div>
+			<div id="cgv" class="collapse">
+				<img alt="" src="https://imgur.com/PIhHvWu.png">
+			</div>
+			<div id="lotte" class="collapse">
+				<img alt="" src="https://moveek.com/media/5b7b8f9c5c9b0187323608.jpg">
+			</div>
+			<div id="platinum" class="collapse">
+				<img alt="" src="https://imgur.com/1G1kwbO.png">
+			</div>
+		</div>
+	</div>
 </body>
 <script>
 	//Google map
@@ -352,9 +182,9 @@
 		var link;
 
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function(position) {
+			navigator.geolocation.getCurrentPosition(function (position) {
 				myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	
+
 				var mapProp = {
 					center: myLatLng,
 					zoom: 13,
@@ -366,14 +196,14 @@
 					map: map
 				});
 
-				google.maps.event.addListener(currentMarker, 'click', (function(currentMarker, i) {
-					return function() {
+				google.maps.event.addListener(currentMarker, 'click', (function (currentMarker, i) {
+					return function () {
 						infowindow.setContent('You are here');
 						infowindow.open(map, currentMarker);
 					}
 				})(currentMarker, i));
 
-				link = 'https://darksky.net/forecast/'+ position.coords.latitude + ',' + position.coords.longitude +'/si12/en';
+				link = 'https://darksky.net/forecast/' + position.coords.latitude + ',' + position.coords.longitude + '/si12/en';
 				document.getElementById('iframe1').src = link;
 				document.getElementById('iframe2').src = link;
 
@@ -440,7 +270,7 @@
 					['Lotte Cinema Keangnam', 21.0170462, 105.7835932],
 					['Lotte Cinema Hà Đông', 20.9636625, 105.7718115],
 					['Lotte Cinema Thăng Long', 21.0079594, 105.7932772],
-					
+
 					['Lotte Cinema Gò Vấp', 10.8382627, 106.6716334],
 					['Lotte Cinema Phú Thọ', 10.7631133, 106.6570733],
 					['Lotte Cinema Thủ Đức', 10.8712548, 106.7692378],
@@ -449,7 +279,7 @@
 					['Lotte Cinema Nowzone', 10.7638952, 106.6827205],
 					['Lotte Cinema Diamond', 10.7807545, 106.6985286],
 					['Lotte Cinema Cantavil', 10.8017125, 106.7471659],
-					
+
 					['Lotte Cinema Huế', 16.4596076, 107.5993896],
 					['Lotte Cinema Ninh Kiều', 10.0422661, 105.7669419],
 					['Lotte Cinema Cần Thơ', 10.0143628, 105.7848188],
@@ -490,7 +320,7 @@
 					['Galaxy Cinema Vinh', 18.6765293, 105.6770785],
 					['Galaxy Bến Tre', 10.2413981, 106.3767538],
 
-					
+
 					//Beta Cineplex
 					['Beta Cineplex Thái Nguyên', 21.5789802, 105.8168203],
 					['Beta Cineplex Biên Hòa', 10.9470274, 106.824883],
@@ -514,7 +344,7 @@
 					['BHD Star Cineplex - Phạm Hùng', 10.7335534, 106.6744053],
 					['BHD Star Cineplex - Vincom Quang Trung', 10.8293161, 106.672507],
 					['BHD Star Cineplex - Vincom Lê Văn Việt', 10.845552, 106.779172],
-					
+
 					//Starlight
 					['Starlight Nguyễn Kim Đà Nẵng', 16.0662446, 108.2033211],
 					['Starlight Buôn Ma Thuột', 12.6817914, 108.0439885],
@@ -527,7 +357,7 @@
 					['Cinestar Hai Bà Trưng', 10.782454, 106.6981727],
 					['Cinestar Cinema Quốc Thanh', 10.763907, 106.6872936],
 					['Cinestar Đà Lạt', 11.9382909, 108.4458008],
-					
+
 					//Platinum Cineplex
 					['Platinum Cinema Garden', 21.01535, 105.777933],
 					['Platinum Cineplex – Nha Trang', 12.2478777, 109.195772],
@@ -554,8 +384,8 @@
 						icon: iconCinema
 					});
 
-					google.maps.event.addListener(marker, 'click', (function(marker, i) {
-						return function() {
+					google.maps.event.addListener(marker, 'click', (function (marker, i) {
+						return function () {
 							infowindow.setContent(locations[i][0]);
 							infowindow.open(map, marker);
 						}
@@ -567,7 +397,7 @@
 
 					cinemaArr.push(cinema);
 				}
-				distanceArr.sort(function(a, b) {
+				distanceArr.sort(function (a, b) {
 					return a[0] - b[0]
 				});
 				var li;
@@ -580,7 +410,7 @@
 					entry.setAttribute("id", "cinema" + i);
 					entry.setAttribute("lat", distanceArr[i][2]);
 					entry.setAttribute("lng", distanceArr[i][3]);
-					entry.appendChild(document.createTextNode( distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
+					entry.appendChild(document.createTextNode(distanceArr[i][1] + ' : ' + distanceArr[i][0] + ' km'));
 					li.appendChild(entry);
 					list.appendChild(li);
 				}
@@ -589,7 +419,7 @@
 				var directionDisplay;
 				var directionsDisplay = [];
 
-				$('#lstcinema a').click(function(e) {
+				$('#lstcinema a').click(function (e) {
 					cinema = new google.maps.LatLng($(this).attr('lat'), $(this).attr('lng'));
 					for (var i = 0; i < infoWindowArr.length; i++) {
 						infoWindowArr[i].close()
@@ -601,7 +431,7 @@
 						provideRouteAlternatives: true,
 						travelMode: google.maps.TravelMode.DRIVING,
 						optimizeWaypoints: true
-					}, function(response, status) {
+					}, function (response, status) {
 						if (status == google.maps.DirectionsStatus.OK) {
 							for (i = 0; i < directionsDisplay.length; i++) {
 								directionsDisplay[i].setMap(null);
@@ -618,8 +448,9 @@
 								directionsDisplay.push(directionDisplay);
 								var infoLeg = new google.maps.InfoWindow();
 								infoLeg = new google.maps.InfoWindow();
-								var step = Math.ceil((response.routes[i].legs[0].steps.length / 2) );
-								infoLeg.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+								var step = Math.ceil((response.routes[i].legs[0].steps.length / 2));
+								infoLeg.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration
+									.text + " ");
 								infoLeg.setPosition(response.routes[i].legs[0].steps[step].end_location);
 								infoLeg.open(map);
 								infoWindowArr.push(infoLeg);
@@ -650,7 +481,7 @@
 			provideRouteAlternatives: true,
 			travelMode: google.maps.TravelMode.DRIVING,
 			optimizeWaypoints: true
-		}, function(response, status) {
+		}, function (response, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				for (i = 0; i < directionsDisplay.length; i++) {
 					directionsDisplay[i].setMap(null);
@@ -665,7 +496,8 @@
 					directionsDisplay.push(directionDisplay);
 					//var infoLeg = new google.maps.InfoWindow();
 					var step = Math.floor(response.routes[i].legs[0].steps.length - 1);
-					golInfo.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text + " ");
+					golInfo.setContent(response.routes[i].legs[0].distance.text + "<br>" + response.routes[i].legs[0].duration.text +
+						" ");
 					golInfo.setPosition(response.routes[i].legs[0].steps[step].end_location);
 					golInfo.open(map);
 				}
@@ -675,6 +507,257 @@
 		});
 	}
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZKcVJJ0FCXeUyYYsVl5_Y22aIOgTAxQ&callback=initMap&libraries=geometry" type="text/javascript"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+ crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+ crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+ crossorigin="anonymous"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZKcVJJ0FCXeUyYYsVl5_Y22aIOgTAxQ&callback=initMap&libraries=geometry"
+ type="text/javascript"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js'></script>
+<script>
+	$(document).ready(function () {
+		//Calendar
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			displayEventTime: false,
+			editable: true,
+			events: [{
+					title: 'BHD - XEM TRỄ CỰC PHÊ',
+					start: '22:00',
+					dow: [0, 1, 2, 3, 4, 5, 6],
+					description: '50K sau 22h',
+					url: 'https://www.bhdstar.vn/deals/xem-tre-cuc-phe/'
+				},
+				{
+					title: 'BHD - SUẤT SỚM ',
+					start: '08:00',
+					end: '10:00',
+					dow: [2, 3, 4, 5],
+					description: '45K 2D trước 10h',
+					url: 'https://www.bhdstar.vn/deals/suat-som-gia-chi-45k/'
+				},
+				{
+					title: 'Beta - Thứ Ba vui vẻ',
+					start: '08:30',
+					dow: [2],
+					description: '45k (2D) và 65k (3D)',
+					url: 'https://betacineplex.vn/khuyen-mai-moi/thu-3-vui-ve.htm'
+				},
+				{
+					title: 'Lotte LOVELY TUESDAY',
+					start: '08:30',
+					dow: [2],
+					description: '45-60k (2D) và 75-90k (3D)',
+					url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/lovely-tuesday-(tu-15-09).aspx'
+				},
+				//{
+				//	title: 'Platinum Special Couple\'s Day',
+				//	start: '10:00',
+				//	dow: [2],
+				//	description: 'mua 2 vé tặng 1 bỏng và 2 đồ uống,',
+				//	url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/special-couple-s-day'
+				//},
+				{
+					title: 'Platinum Special Thursday',
+					start: '10:00',
+					dow: [4],
+					description: '45K 2D',
+					url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/n-a'
+				},
+				//{
+				//	title: 'Platinum ladies\' night',
+				//	start: '10:00',
+				//	dow: [3],
+				//	description: 'giảm 50% cho vé thứ 2 và 1 phiếu giảm 50% cho 1 loại combo tại quầy Concessions cho nữ',
+				//	url: 'https://platinumcineplex.vn/vi/news/news-and-promotion/ladies-night'
+				//},
+			],
+			eventClick: function (event) {
+				if (event.url) {
+					window.open(event.url);
+					return false;
+				}
+			},
+			eventRender: function (event, element) {
+				element.find('.fc-title').append("<br/>" + event.description);
+			}
+		});
+		// adding a custom events:
+		$('#calendar').fullCalendar('addEventSource',
+			function (start, end, timezone, callback) {
+
+				var events = [];
+
+				var y = start._d.getFullYear(),
+					m = start._d.getMonth();
+				var firstDay = new Date(y, m, 1);
+				var lastDay = new Date(y, m + 1, 0);
+
+				var test_date = new Date(lastDay);
+				while (test_date.getDay() !== 1) {
+					test_date.setDate(test_date.getDate() - 1);
+				}
+
+				// Last monday of last month
+				if (test_date.is().monday()) {
+					events.push({
+							title: 'CGV CULTURE DAY',
+							start: '08:30',
+							start: test_date,
+							description: '50K 2D',
+							url: 'https://www.cgv.vn/default/newsoffer/cgv-culture-day/'
+						}, // CGV
+						{
+							title: 'Lotte Big Smile Day',
+							start: '08:30',
+							start: test_date,
+							description: '45K 2D',
+							url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/l-selection-(45).aspx'
+						} // lottecinema
+					);
+				}
+
+				y = end._d.getFullYear(),
+					m = end._d.getMonth() - 1;
+				firstDay = new Date(y, m, 1);
+				lastDay = new Date(y, m + 1, 0);
+
+				test_date = new Date(lastDay);
+
+				while (test_date.getDay() !== 1) {
+					test_date.setDate(test_date.getDate() - 1);
+				}
+
+				// Last monday of current month
+				if (test_date.is().monday()) {
+					events.push({
+							title: 'CGV CULTURE DAY',
+							start: '08:30',
+							start: test_date,
+							description: '50K 2D',
+							url: 'https://www.cgv.vn/default/newsoffer/cgv-culture-day/'
+						}, // CGV
+						{
+							title: 'Lotte Big Smile Day',
+							start: '08:30',
+							start: test_date,
+							description: '45K 2D',
+							url: 'https://lottecinemavn.com/vi-vn/su-kien/e-l-selection/l-selection-(45).aspx'
+						} // lottecinema
+					);
+				}
+
+
+				// First wednesday current month
+				y = start._d.getFullYear(),
+					m = start._d.getMonth();
+				firstDay = new Date(y, m, 1);
+				lastDay = new Date(y, m + 1, 0);
+
+				test_date = new Date(lastDay);
+				while (test_date.getDay() !== 3) {
+					test_date.setDate(test_date.getDate() + 1);
+				}
+
+				if (test_date.is().wednesday()) {
+					events.push({
+						title: 'BHD B\'DAY',
+						start: '08:30',
+						start: test_date,
+						description: '45K 2D',
+						url: 'http://www.bhdstar.vn/deals/bday-2/'
+					});
+				}
+
+				// First wednesday next month
+				y = end._d.getFullYear(),
+					m = end._d.getMonth();
+				firstDay = new Date(y, m, 1);
+				lastDay = new Date(y, m + 1, 0);
+
+				test_date = new Date(firstDay);
+				while (test_date.getDay() !== 3) {
+					test_date.setDate(test_date.getDate() + 1);
+				}
+
+				if (test_date.is().wednesday()) {
+					events.push({
+						title: 'BHD B\'DAY',
+						start: '08:30',
+						start: test_date,
+						description: '45K 2D',
+						url: 'http://www.bhdstar.vn/deals/bday-2/'
+					});
+				}
+
+				// First monday current month
+				y = start._d.getFullYear(),
+					m = start._d.getMonth();
+				firstDay = new Date(y, m, 1);
+				lastDay = new Date(y, m + 1, 0);
+
+				test_date = new Date(lastDay);
+				while (test_date.getDay() !== 1) {
+					test_date.setDate(test_date.getDate() + 1);
+				}
+
+				if (test_date.is().monday()) {
+					events.push({
+						title: 'Beta - MAD SALE DAY',
+						start: '08:30',
+						start: test_date,
+						description: '45K 2D & tặng 1 bỏng (Phụ thu 5k đối với phim bom tấn)',
+						url: 'https://betacineplex.vn/khuyen-mai-moi/bung-no-voi-mad-sale-day.htm'
+					});
+
+				}
+
+				// First monday next month
+				y = end._d.getFullYear(),
+					m = end._d.getMonth();
+				firstDay = new Date(y, m, 1);
+				lastDay = new Date(y, m + 1, 0);
+
+				test_date = new Date(firstDay);
+				while (test_date.getDay() !== 1) {
+					test_date.setDate(test_date.getDate() + 1);
+				}
+
+				if (test_date.is().monday()) {
+					events.push({
+						title: 'Beta - MAD SALE DAY',
+						start: '08:30',
+						start: test_date,
+						description: '45K 2D & tặng 1 bỏng (Phụ thu 5k đối với phim bom tấn)',
+						url: 'https://betacineplex.vn/khuyen-mai-moi/bung-no-voi-mad-sale-day.htm'
+					});
+
+				}
+
+				// return events generated
+				callback(events);
+			}
+		);
+
+		var $myGroup = $('#myMenu');
+		$myGroup.on('show.bs.collapse', '.collapse', function () {
+			$myGroup.find('.collapse.show').collapse('hide');
+		});
+	});
+</script>
 
 </html>
